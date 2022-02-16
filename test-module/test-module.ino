@@ -4,13 +4,15 @@
 #include <ezButton.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <ESP32Servo.h>
  
-#define ONE_WIRE_BUS 13
+#define ONE_WIRE_BUS 32
 int lcdColumns = 16;
 int lcdRows = 2;
-int buzzer = 0;
-int PIR = 18;
+int buzzer = 33;
+int PIR = 5;
 int val = 0;
+Servo myservo; 
 ezButton limitSwitch(4); 
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);
 OneWire oneWire(ONE_WIRE_BUS);
@@ -26,18 +28,18 @@ void setup()
     lcd.backlight();
     limitSwitch.setDebounceTime(50);
     sensors.begin();
-    digitalWrite(buzzer, 0);
+    myservo.attach(23); 
     //scanner_lcd();
     //show_lcd();
     //PIR_READ();
     //microswitch();
     //temp_print();
+    // sound_buzzer();
+    drive_servo();
     
 }
 
 void loop()
 {
-    int sensorValue = digitalRead(0);
-    Serial.println(sensorValue);
-    delay(500);       
+    Serial.println(digitalRead(PIR));
 }

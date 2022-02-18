@@ -6,7 +6,7 @@
 #include <DallasTemperature.h>
 #include <ESP32Servo.h>
  
-#define ONE_WIRE_BUS 32
+#define ONE_WIRE_BUS 18
 int lcdColumns = 16;
 int lcdRows = 2;
 int buzzer = 33;
@@ -22,6 +22,7 @@ void setup()
 {
     pinMode(buzzer, OUTPUT);
     pinMode(PIR, INPUT);
+    pinMode(18,INPUT);
     Wire.begin();
     Serial.begin(115200);
     lcd.init();
@@ -33,13 +34,14 @@ void setup()
     //show_lcd();
     //PIR_READ();
     //microswitch();
-    //temp_print();
+    // temp_print();
     // sound_buzzer();
-    drive_servo();
+    //drive_servo();
     
 }
 
 void loop()
 {
-    Serial.println(digitalRead(PIR));
+    Serial.println(digitalRead(26));
+    delay(200);
 }

@@ -2,7 +2,7 @@ void PIR_READ()
 {
     while (1)
     {
-        val = digitalRead(PIR);
+        val = digitalRead(5);
         Serial.print("val = ");
         Serial.println(val);
         if (val == 0)

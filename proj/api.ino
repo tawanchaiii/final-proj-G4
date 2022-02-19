@@ -4,13 +4,21 @@ void WiFi_Connect(){
     while(WiFi.status() != WL_CONNECTED){
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         Serial.println("Connecting WiFi...");
+        lcd.clear();
+        lcd.setCursor(0, 0);  
+        lcd.print("Connecting WIFI");
+        lcd.setCursor(0, 1);  
+        lcd.print(".");
+        lcd.print(".");
+        lcd.print(".");
     }
+    lcd.clear();
     Serial.println("Connected Finish");
     Serial.print("IP = ");
     Serial.println(WiFi.localIP());
 }
 
-void _post(void* parameter ){
+void _post(void* parameter){
     while(1){
         if(WiFi.status() == WL_CONNECTED){
             String chair;
@@ -69,4 +77,34 @@ int _get(){
     else {
         WiFi_Connect();
     }
+}
+
+int door(){
+    if(WiFi.status() == WL_CONNECTED){
+        HTTPClient http;
+        http.begin(url_door);
+        int httpCode = http.GET();
+        if(httpCode == HTTP_CODE_OK){
+            String payload = http.getString();
+            DeserializationError err = deserializeJson(JSONGet,payload);
+            if(err){
+                Serial.print(F("deserializeJson() failed with code "));
+                Serial.println(err.c_str());
+                return -1;
+            }
+            else{
+                Serial.print("Door = ");
+                Serial.println((int)JSONGet["current_people"]);
+                return (int)JSONGet["current_people"];
+            }
+        }
+        else{
+            Serial.println(httpCode);
+            Serial.println("ERROR on GET Request");
+        }
+    }
+    else {
+        WiFi_Connect();
+    }
+
 }

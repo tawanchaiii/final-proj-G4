@@ -11,5 +11,6 @@ void temp_print(void* parameter)
     }
 }
 float get_temp(){
+    sensors.requestTemperatures();
     return sensors.getTempCByIndex(0);
 }

@@ -9,7 +9,7 @@
 #define ONE_WIRE_BUS 18
 int lcdColumns = 16;
 int lcdRows = 2;
-int buzzer = 33;
+int buzzer = 25;
 int PIR = 5;
 int val = 0;
 Servo myservo; 
@@ -23,6 +23,8 @@ void setup()
     pinMode(buzzer, OUTPUT);
     pinMode(PIR, INPUT);
     pinMode(18,INPUT);
+    pinMode(34,INPUT);
+    pinMode(26,INPUT);
     Wire.begin();
     Serial.begin(115200);
     lcd.init();
@@ -32,16 +34,16 @@ void setup()
     myservo.attach(23); 
     //scanner_lcd();
     //show_lcd();
-    //PIR_READ();
+    // PIR_READ();
     //microswitch();
     // temp_print();
-    // sound_buzzer();
-    //drive_servo();
+    sound_buzzer();
+    // drive_servo();
     
 }
 
 void loop()
 {
-    Serial.println(digitalRead(26));
-    delay(200);
+//  Serial.println(digitalRead(26));
+    // delay(200);
 }
